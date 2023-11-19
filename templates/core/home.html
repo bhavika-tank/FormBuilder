@@ -1,0 +1,219 @@
+{% extends "base.html"%}
+
+{% block title %}
+Dashboard
+{% endblock title %}
+
+{% block content %}
+
+<!-- Alert Start -->
+{% block error_messages %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-sticky alert-{{ message.tags }}" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">×</button>
+                <strong>{{ message }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock error_messages %}
+<!-- Alert End -->
+
+<!-- PAGE-HEADER -->
+<div class="page-header">
+    <h1 class="page-title">Dashboard</h1>
+    {% comment %} <div>
+        <a href="{% url 'account:user-add' %}" class="btn btn-primary label-btn">
+            <i class="fe fe-plus label-btn-icon me-2"></i>
+            ADD USER
+        </a>
+    </div> {% endcomment %}
+</div>
+<!-- PAGE-HEADER END -->
+
+{% if user.is_superuser %}
+<!-- ROW OPEN -->
+<div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+        <div class="card bg-primary img-card box-primary-shadow">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="text-white">
+                        <h2 class="mb-0 number-font">{{approvedcompanies}}</h2>
+                        <p class="text-white mb-0">Approved Companies </p>
+                    </div>
+                    <div class="ms-auto"> <i class="fa fa-briefcase text-white fs-30 me-2 mt-2"></i> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+        <div class="card bg-primary img-card box-primary-shadow">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="text-white">
+                        <h2 class="mb-0 number-font">{{pendingapprovecompanies}}</h2>
+                        <p class="text-white mb-0">Pending Approve Companies</p>
+                    </div>
+                    <div class="ms-auto"> <i class="fa fa-briefcase text-white fs-30 me-2 mt-2"></i> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<!-- ROW CLOSED -->
+
+<!-- ROW OPEN -->
+<div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-4">
+        <div class="card bg-primary img-card box-primary-shadow">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="text-white">
+                        <h2 class="mb-0 number-font">{{total_staff}}</h2>
+                        <p class="text-white mb-0">Staffs</p>
+                    </div>
+                    <div class="ms-auto"> <i class="fe fe-user-check text-white fs-30 me-2 mt-2"></i> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- COL END -->
+    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-4">
+        <div class="card bg-secondary img-card box-secondary-shadow">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="text-white">
+                        <h2 class="mb-0 number-font">{{total_user}}</h2>
+                        <p class="text-white mb-0">Users</p>
+                    </div>
+                    <div class="ms-auto"> <i class="fe fe-users text-white fs-30 me-2 mt-2"></i> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- COL END -->
+    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-4">
+        <div class="card  bg-success img-card box-success-shadow">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="text-white">
+                        <h2 class="mb-0 number-font">{{form}}</h2>
+                        <p class="text-white mb-0">Published form</p>
+                    </div>
+                    <div class="ms-auto"> <i class="fe fe-grid text-white fs-30 me-2 mt-2"></i> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ROW CLOSED -->
+{% elif user.type == "COMPANY" %}
+
+<!-- ROW OPEN -->
+<div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-4">
+        <div class="card bg-primary img-card box-primary-shadow">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="text-white">
+                        <h2 class="mb-0 number-font">{{company_staff}}</h2>
+                        <p class="text-white mb-0">Staffs</p>
+                    </div>
+                    <div class="ms-auto"> <i class="fe fe-user-check text-white fs-30 me-2 mt-2"></i> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- COL END -->
+    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-4">
+        <div class="card bg-secondary img-card box-secondary-shadow">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="text-white">
+                        <h2 class="mb-0 number-font">{{company_user}}</h2>
+                        <p class="text-white mb-0">Users</p>
+                    </div>
+                    <div class="ms-auto"> <i class="fe fe-users text-white fs-30 me-2 mt-2"></i> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- COL END -->
+    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-4">
+        <div class="card  bg-success img-card box-success-shadow">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="text-white">
+                        <h2 class="mb-0 number-font">{{user_form}}</h2>
+                        <p class="text-white mb-0">Published form</p>
+                    </div>
+                    <div class="ms-auto"> <i class="fe fe-grid text-white fs-30 me-2 mt-2"></i> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ROW CLOSED -->
+
+{% elif user.type == "STAFF" %}
+
+<!-- ROW OPEN -->
+<div class="row">
+    
+    <!-- COL END -->
+    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+        <div class="card bg-secondary img-card box-secondary-shadow">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="text-white">
+                        <h2 class="mb-0 number-font">{{staff_user}}</h2>
+                        <p class="text-white mb-0">Users</p>
+                    </div>
+                    <div class="ms-auto"> <i class="fe fe-users text-white fs-30 me-2 mt-2"></i> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- COL END -->
+    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+        <div class="card  bg-success img-card box-success-shadow">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="text-white">
+                        <h2 class="mb-0 number-font">{{user_form}}</h2>
+                        <p class="text-white mb-0">Published form</p>
+                    </div>
+                    <div class="ms-auto"> <i class="fe fe-grid text-white fs-30 me-2 mt-2"></i> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ROW CLOSED -->
+
+{% else %}
+
+<!-- ROW OPEN -->
+<div class="row">
+    
+    {% comment %} <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+        <div class="card  bg-success img-card box-success-shadow">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="text-white">
+                        <h2 class="mb-0 number-font">{{form}}</h2>
+                        <p class="text-white mb-0">Published form</p>
+                    </div>
+                    <div class="ms-auto"> <i class="fe fe-grid text-white fs-30 me-2 mt-2"></i> </div>
+                </div>
+            </div>
+        </div>
+    </div> {% endcomment %}
+</div>
+<!-- ROW CLOSED -->
+
+{% endif %}
+
+{% endblock content %}

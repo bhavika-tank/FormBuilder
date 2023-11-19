@@ -1,0 +1,84 @@
+<!-- app-Header -->
+<div class="app-header header sticky" onmousedown="return false">
+    <div class="container-fluid main-container">
+        <div class="d-flex">
+            <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar" href="javascript:void(0)"></a>
+            <!-- sidebar-toggle-->
+            <a class="logo-horizontal " href="{% url "core:home" %}">
+                {% comment %} <img src="/static/assets/images/brand/logo-white.png" class="header-brand-img desktop-logo" alt="logo">
+                <img src="/static/assets/images/brand/logo-dark.png" class="header-brand-img light-logo1" alt="logo"> {% endcomment %}
+
+                <h3 class="mb-0 header-brand-img desktop-logo text-center" style="color: #DEDEFC; font-family: 'papyrus';"><b>Form Builder</b></h3>
+                <h3 class="mb-0 header-brand-img light-logo1 text-center" style="color: #6C5EFC; font-family: 'papyrus';"><b>Form Builder</b></h3>
+            </a>
+            <!-- LOGO -->
+            <div class="main-header-center ms-3 d-none d-lg-block">
+                
+            </div>
+            <div class="d-flex order-lg-2 ms-auto header-right-icons">
+                <!-- SEARCH -->
+                <button class="navbar-toggler navresponsive-toggler d-lg-none ms-auto" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4"
+                    aria-controls="navbarSupportedContent-4" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon fe fe-more-vertical"></span>
+                </button>
+                <div class="navbar navbar-collapse responsive-navbar p-0">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+                        <div class="d-flex order-lg-2">
+                            {% comment %} <div class="dropdown d-lg-none d-flex">
+                                <a href="javascript:void(0)" class="nav-link icon" data-bs-toggle="dropdown">
+                                    <i class="fe fe-search"></i>
+                                </a>
+                                <div class="dropdown-menu header-search dropdown-menu-start">
+                                    <div class="input-group w-100 p-2">
+                                        <input type="text" class="form-control" placeholder="Search....">
+                                        <div class="input-group-text btn btn-primary">
+                                            <i class="fa fa-search" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> {% endcomment %}
+                            
+                            <!-- Theme-Layout Start -->
+                            <div class="d-flex">
+                                <a class="nav-link icon theme-layout nav-link-bg layout-setting">
+                                    <span class="dark-layout"><i class="fe fe-moon"></i></span>
+                                    <span class="light-layout"><i class="fe fe-sun"></i></span>
+                                </a>
+                            </div>
+                            <!-- Theme-Layout End -->
+                            
+                            {% if request.user.is_authenticated %}
+                            <div class="dropdown d-flex profile-1">
+                                <a href="javascript:void(0)" data-bs-toggle="dropdown" class="nav-link leading-none d-flex">
+                                    <img src="/static/assets/images/users/user.jpg" alt="profile-user"
+                                        class="avatar  profile-user brround cover-image">
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <div class="drop-heading">
+                                        <div class="">
+                                            <h4 class="text-dark mb-0 fs-14 fw-semibold">{{ request.user.username }}</h4>
+                                            {% comment %} <small class="text-muted">{{ request.user.type }}</small> {% endcomment %}
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-divider m-0"></div>
+                                    
+                                    <a class="dropdown-item" href="{% url 'account:logout' %}">
+                                        <i class="dropdown-icon fe fe-alert-circle"></i> Sign out
+                                    </a>
+                                </div>
+                            </div>
+                            {% else %}
+                            <button type="button" class="btn btn-pill btn-primary" data-bs-toggle="modal" data-bs-target="#input-modal" data-bs-whatever="@mdo"><i class="fa fa-sign-in me-2"></i>Sign In</button>
+
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /app-Header -->

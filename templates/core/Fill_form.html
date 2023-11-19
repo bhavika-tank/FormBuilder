@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+
+{% block title %}
+Fill Form
+{% endblock title %}
+
+{% block content %}
+
+<!-- Alert Start -->
+{% block error_messages %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-sticky alert-{{ message.tags }}" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">×</button>
+                <strong>{{ message }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock error_messages %}
+<!-- Alert End -->
+
+<div class="page-header">
+    <h1 class="page-title" id="form_name">{{ form_data.form_name }}</h1>
+    <div>
+    </div>
+</div>
+
+<div class="row d-flex justify-content-center">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-9">
+        <form method="post">
+            {% csrf_token %}
+            <div class="card card-headpills">
+                <div class="card-header border-bottom">
+                    <div class="card-title">
+                        <ul class="nav nav-pills card-header-pills" id="nav-tab">
+                            <!-- <li class="nav-item px-2 mb-2">
+                                <a class="btn btn-outline-primary active" style="width: 93px;" data-bs-toggle="tab" href="#activepills">Home</a>
+                            </li> -->
+                            
+                        </ul>
+                    </div>
+                    <div class="card-options">
+                        <!-- <button class="btn btn-outline-primary mx-2" type="button" id="add_tab_content">+</button> -->
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="attribute" hidden>{{ attribute }}</div>
+                    <div class="tab-content" id="nav-tabContent" >
+                        <!-- <div class="tab-pane active dropArea box2 nav-home border tabpen_min_hight" id="activepills">
+                            
+                        </div> -->
+                    </div>
+                </div>
+                <div class="card-footer text-end px-2">
+                    <button type="submit" class="btn btn-danger" id="reset">Clear Form</button>
+                    <button type="submit" class="btn btn-success" id="save">SAVE</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+ <!-- Inout modal -->
+ <div class="modal fade" id="input-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h5 class="modal-title">Log In To Continue..</h5>
+                <button class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'accounts:login' %}" method="post" role="form">
+                    {% csrf_token %}
+                    <input type="text" class="form-control" name="current_url" value="{{ request.path }}" hidden>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Email Address</label>
+                        {{ form.email }}
+                        {% comment %} <input type="text" class="form-control" id="recipient-name"> {% endcomment %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Password</label>
+                        {{ form.password }}
+                        {% comment %} <input type="text" class="form-control" id="recipient-name"> {% endcomment %}
+                    </div>
+                    <button class="btn ripple btn-success" type="submit">Log In</button>
+                    <button class="btn ripple btn-warning" data-bs-dismiss="modal" type="button">Proceed WithOut LogIn</button>
+                </form>
+            </div>
+            {% comment %} <div class="modal-footer">
+                <button class="btn ripple btn-success" type="button">Save changes</button>
+            </div> {% endcomment %}
+        </div>
+    </div>
+</div>
+<!-- End Datepicker modal -->
+
+
+{% endblock content %}
+
+{% block extrajs %}
+
+{% if request.user.is_authenticated %}
+  
+{% else %}
+<script>
+    $(window).on('load', function() {
+        $('#input-modal').modal('show');
+    });
+</script>
+{% endif %}
+
+<script>    
+
+    var jsonString = document.getElementById("attribute").textContent;
+    var form = document.createElement('div');
+    // var frame = document.getElementById('boxcontent').appendChild(form);
+    // var divElement = frame.appendChild(document.createElement('div'));
+    var tab_frame = document.getElementById('nav-tabContent');
+    var btntab_frame = document.getElementById('nav-tab');
+    
+    
+    var formData = jsonString.replace(/\'{/g, '{').replace(/\}'/g, '}');
+    var formDataObject = JSON.parse(formData);
+
+    // for(var key in formDataObject){
+    //     var elementData = JSON.parse(formDataObject[key]);
+    //     console.log(elementData);
+    //     var tab_Btn = `<li class="nav-item px-2 mb-2"><a class="btn btn-outline-primary active" style="width: 93px;" data-bs-toggle="tab" href="#activepills">Home</a></li>`
+    //     btntab_frame.innerHTML += tab_Btn
+    //     tab_frame.innerHTML += elementData
+
+    // }
+    btntab_frame.innerHTML = '';
+    tab_frame.innerHTML = '';
+
+    for (var key in formDataObject) {
+        if (formDataObject.hasOwnProperty(key)) {
+            var elementData = JSON.parse(formDataObject[key]);
+            var tabContentId = 'tab-' + key;
+            
+            tab_frame.innerHTML += elementData;
+
+            var idMatch = elementData.match(/id="([^"]+)"/);
+            if (idMatch) {
+                var idValue = idMatch[1];
+                var tab_Btn = `
+                    <li class="nav-item px-2 mb-2">
+                        <a class="btn btn-outline-primary" data-bs-toggle="tab" href="#${idValue}">${key}</a>
+                    </li>`;
+                btntab_frame.innerHTML += tab_Btn;
+            }
+        }
+    }
+    var tab_list = {};
+    $("#save").on("click", function () {
+        var tab_content = document.getElementById('nav-tabContent').children;
+        var tabBtn = document.getElementById('nav-tab').children;
+
+        for (var tab_i = 0; tab_i < tabBtn.length; tab_i++) {
+            console.log(tabBtn[tab_i].textContent);
+        }
+
+        newId = 0;
+        for(var i = 0 ; i<tab_content.length; i++){
+            tab_name = tabBtn[i].textContent;
+            
+            
+            var formChildAttributes = tab_content[i].children;
+            for(let element=0; element < formChildAttributes.length; element++) {
+                var col_id = formChildAttributes[element].firstChild.lastChild.previousSibling.id;
+                var val = document.getElementById(col_id).value
+                console.log(val)
+                if(col_id){
+                    var set_val = formChildAttributes[element].firstChild.lastChild.previousSibling
+                    set_val.setAttribute("value", val);
+                }
+            }
+            
+            var formJSONString = JSON.stringify(tab_content[i].outerHTML);
+            tab_list[tab_name]= formJSONString;
+        }
+
+        console.log(tab_list);
+
+        var currentURL = window.location.href;
+
+        var urlParts = currentURL.split('/');
+
+        var urlID = urlParts[urlParts.length - 1];
+
+        $.ajax({
+            url: "{% url 'core:saveFormData' %}",
+            type: "POST",
+            data: {
+                form_name: document.getElementById('form_name').textContent,
+                tab_list: JSON.stringify(tab_list),
+                uuId : urlID,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+            },
+            success: function (data) {
+                console.log(data);
+                console.log("Data is successfully saved...");
+            },
+            error: function (data) {
+                console.log("Something went wrong...");
+            }
+        });
+    });
+
+</script>
+
+{% endblock extrajs %}

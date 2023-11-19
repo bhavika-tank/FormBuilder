@@ -1,0 +1,399 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/core.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <style>
+        body {
+            /* display: flex; */
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            height: 100;
+            /* background: black; */
+        }
+    
+        .dropArea {
+            display: inline-block;
+            vertical-align: top;
+            /* width: 700px; */
+            min-height: 300px;
+            /* border: 2px solid rgb(0, 0, 0); */
+            /* box-shadow: -3px 2px 1px #757575; */
+            padding: 5px;
+            /* background: #50b8e4c9; */
+            box-sizing: border-box;
+            border-left: 5px solid transparent;
+            font-family: 'Lato', sans-serif;
+            transition: all .5s ease;
+        }
+    
+        p {
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+        }
+    
+        .boxbdr {
+            border: 0.1rem solid gray;
+            border-radius: 5px;
+            padding: 5px;
+            /* box-shadow: inset 0 0 30px; */
+            
+        }
+    
+        hr {
+            width: 100%;
+            border-top: 1px solid #fff;
+            box-shadow: 0 -7px 16px 2px #fff;
+            margin: 0px 0px 10px 0px;
+            border-radius: 50%;
+        }
+
+        .boxbdr:hover{
+            transition-duration: 0.7s;
+            /* box-shadow: -5px -5px 5px 5px rgba(0, 0, 0, 0.2); */
+            /* box-shadow: -3px -1px 66px 0px rgba(0,0,0,0.75); */
+            box-shadow: 0px 0px 20px 1px rgba(0,0,0,0.75);
+        }
+
+        .card{
+            /* margin: 90px 30px 30px 5px;
+            border: 1px solid black;
+            width: fit-content; */
+            /* width: 21cm; */
+            /* height: 29.7cm;  */
+            /* margin: 5mm 70mm 30mm 70mm; */
+            box-shadow: 0px 0px 20px 1px rgba(0,0,0,0.75);
+        }
+
+        .sticky{
+            position: -webkit-sticky;
+            position: absolute;
+            /* top: 0; */
+            bottom: 30px;
+            right: 30px;
+        }
+        .sticky-reset{
+            position: -webkit-sticky;
+            position: absolute;
+            /* top: 0; */
+            bottom: 30px;
+            right: 100px;
+        }
+
+    </style>
+</head>
+<body>
+    
+      
+    <div class="container-fluid">
+        
+        <!-- <span class="fs-5 d-none d-sm-inline text-center">
+            <h1 style="color: #751721; font-family: 'Lucida Handwriting';"><b>Form Builder</b>
+            </h1>
+            <h4 style="color: #323031; font-family: 'Comic Sans MS'; font-size: smaller;"><b>Fill This Form</b>
+            </h4>
+        </span>
+        <div class="row flex-nowrap">
+            
+            <form style="display: contents;" method="POST" id="myForm">
+                {% csrf_token %}
+                <div class="col p-3 dropArea box2 card" id="boxcontent">
+                    <div id="attribute" hidden>{{ attribute }}</div>
+                    <button type="submit" class="btn btn-success sticky" id="submit">SUBMIT</button>
+                </div>
+            </form>
+        </div> -->
+        <div class="row">
+            <span class="fs-5 text-center">
+                <h1 style="color: #751721; font-family: 'Lucida Handwriting';"><b>Form Builder</b>
+                </h1>
+                <h4 style="color: #323031; font-family: 'Comic Sans MS'; font-size: smaller;"><b>Fill This Form</b>
+                </h4>
+            </span>
+        </div>
+        <div class="row">
+            <form style="display: contents;" method="POST" id="myForm">
+                {% csrf_token %}
+                <div class="col-10 col-sm-10 col-md-8 col-lg-8  col-xl-6 p-3 dropArea box2 card mx-auto" id="boxcontent">
+                    <div id="attribute" hidden>{{ attribute }}</div>
+                    <button type="submit" class="btn btn-success sticky" id="submit">SUBMIT</button>
+                </div>
+            </form>
+            </div>
+    </div>
+
+<script>
+    var jsonString = document.getElementById("attribute").textContent;
+    var form = document.createElement('div');
+    var frame = document.getElementById('boxcontent').appendChild(form);
+    // var divElement = frame.appendChild(document.createElement('div'));
+
+
+    var formData = jsonString.replace(/\'{/g, '{').replace(/\}'/g, '}');
+    var formDataObject = JSON.parse(formData);
+    
+    var id = 0
+    for(var key in formDataObject){
+        id++;
+        var elementData = formDataObject[key];
+        elementData = JSON.parse(elementData);
+
+        var divElement = frame.appendChild(document.createElement('div'));
+        divElement.setAttribute('class', 'd-flex mb-3 p-2')
+        
+        for(var elementType in elementData){
+            if (elementData.hasOwnProperty(elementType)){
+
+                var element = document.createElement(elementType)
+
+                if (elementType !== 'LABEL') {
+                    element.id = 'id_'+[id];
+                }
+
+                if(elementType == "OPTION"){
+
+                }else{
+                    var addFormElement = divElement.appendChild(element)
+                }
+
+                for (var attribute in elementData[elementType]) {
+
+                    if (elementData[elementType].hasOwnProperty(attribute)) {
+                        var value = elementData[elementType][attribute];
+
+                        for(var attrName in value) {
+                            if(attrName === 'textContent'){
+                                addFormElement.textContent = value[attrName];
+                            }else{
+                                addFormElement.setAttribute(attrName, value[attrName]);
+                                if(elementType == "SELECT"){
+                                    var select_id = value.id
+                                    var selects_new = document.getElementById(select_id);
+                                }
+                                if(elementType == "OPTION"){
+                                    var optionElement = document.createElement('option');
+                                    optionElement.setAttribute(attrName, value[attrName]);
+                                    optionElement.textContent = value[attrName];
+                                    selects_new.appendChild(optionElement);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // if (elementType !== 'LABEL'){
+                //     element.id = 'id_'+[id];
+                // }
+                // var addFormElement = divElement.appendChild(element)                
+
+                // if(elementType == 'SELECT'){
+                //     for(var attribute in elementData[elementType]){
+                //         var value = elementData[elementType][attribute];
+                        
+                //         for(var attrName in value){
+                //             if(attrName === 'textContent'){
+                //                 addFormElement.textContent = value[attrName];
+                //             } else {
+                //                 addFormElement.setAttribute(attrName, value[attrName]);
+                //                 var optionElement = document.createElement('option');
+                //                 optionElement.setAttribute(attrName, value[attrName]);
+                //                 optionElement.textContent = value[attrName];
+                //                 addFormElement.appendChild(optionElement);
+                //             }
+                //         }
+                //         if(elementData[elementType].hasOwnProperty(attribute)){
+                //         } 
+                //     }
+                // }
+            }
+        }
+
+        // for (var elementType in elementData){
+        //     console.log(elementType);
+        //     if(elementData.hasOwnProperty(elementType)){
+        //         var element = document.createElement(elementType)
+                
+        //         if (elementType !== 'LABEL') {
+        //             element.id = 'id_'+[id];
+        //         }
+        //         var addFormElement = divElement.appendChild(element)
+
+        //         for (var attribute in elementData[elementType]) {
+        //             if (elementData[elementType].hasOwnProperty(attribute)) {
+        //                 var value = elementData[elementType][attribute];
+        //                 for(var attrName in value) {
+        //                     if(attrName === 'textContent'){
+        //                         addFormElement.textContent = value[attrName];
+        //                     }else{
+        //                         addFormElement.setAttribute(attrName, value[attrName]); 
+        //                     }
+
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+    }
+
+    var listOfTagAttributes = {};
+    $('#submit').on('click', function(){
+        var data = document.getElementById('boxcontent').children;
+        
+        for (var i = 2; i < data.length; i++) {
+            var innerChild = data[i].children;
+
+            for (var j = 0; j < innerChild.length; j++) {
+                var newInnerChild = innerChild[j].children;
+
+                // for (var k = 0; k < newInnerChild.length; k++) {
+                //     if (newInnerChild[k].tagName == 'INPUT') {
+                //         var in_val = newInnerChild[k].id;
+                //         var val = document.getElementById(in_val).value;
+
+                //         // Set the value of the input element
+                //         document.getElementById(in_val).value; // Change "New Value" to your desired value
+                //         console.log(val);
+                //     }
+
+                // }
+
+                var formAttributesJSON = {};
+                var attrElement = [];
+
+                for (let element = 0; element < newInnerChild.length; element++) {
+                    attrElement.push(element);
+                    var tagName = newInnerChild[element].tagName;
+                    var attribute = newInnerChild[element].attributes;
+                    var lblTextContent = newInnerChild[element].textContent;
+                    var attributeObject = [];
+                    
+                    for (let i = 0; i < attribute.length; i++) {
+                        const attributelist = attribute[i];
+                        attributeObject.push({ [attributelist.name]: attributelist.value });
+                    }
+
+                    for (var k = 0; k < newInnerChild.length; k++) {
+                        if (newInnerChild[k].tagName == 'INPUT') {
+                            var in_val = newInnerChild[k].id;
+                            var val = document.getElementById(in_val).value;
+
+                            // Set the value of the input element
+                            // document.getElementById(in_val).value; // Change "New Value" to your desired value
+                            // console.log(val);
+                        }
+
+                    }
+
+                    if (tagName === "LABEL") {
+                        attributeObject.push({ "textContent": lblTextContent });
+                    } else if (tagName === "INPUT") {
+                        attributeObject.push({ "value": val });
+                    }
+
+                    formAttributesJSON[tagName] = attributeObject;
+                }
+
+                delete formAttributesJSON.SPAN;
+                formAttributesJSONString = JSON.stringify(formAttributesJSON);
+
+                listOfTagAttributes[j] = formAttributesJSONString
+            }
+        }
+
+        // console.log(listOfTagAttributes);
+        var currentURL = window.location.href;
+
+        var urlParts = currentURL.split('/');
+
+        var urlID = urlParts[urlParts.length - 1];
+
+        $.ajax({
+            url: "{% url 'core:saveFormData' %}",
+            type: "POST",
+            data: {
+                listOfTagAttributes : JSON.stringify(listOfTagAttributes),
+                uuId : urlID,
+                csrfmiddlewaretoken : '{{ csrf_token }}',
+            },
+            success:function(data){
+                console.log(data);
+                console.log("Data is successfully saved...")
+            },
+            error:function(data){
+                console.log("Something went wrong...")
+            }
+        });
+    });
+
+    
+    // var listOfTagAttributes = {};
+    // // Get the form element by its ID
+    //     $("#submit").on("click",function(){
+    //         var newData = document.getElementById('boxcontent').children
+    //         newId = 0
+    //         for(var i = 0 ; i<newData.length; i++){
+    //             if(newData[i].tagName == 'DIV'){
+    //                 newId++
+
+    //                 formChildAttributes = newData[i].children
+    //                 console.log(formChildAttributes);
+    //                 var formAttributesJSON = {};
+    //                 var attrElement = []
+    //                 for(let element=0; element < formChildAttributes.length; element++) {
+    //                     attrElement.push(element)
+    //                     var tagName = formChildAttributes[element].tagName;
+    //                     var attribute = formChildAttributes[element].attributes;
+    //                     var lblTextContent = formChildAttributes[element].textContent;
+    //                     var attributeObject = [];
+                        
+    //                     for (let i = 0; i < attribute.length; i++) {
+    //                         const attributelist = attribute[i];
+    //                         attributeObject.push({[attributelist.name] : attributelist.value });
+    //                     }
+    //                     if (tagName === "LABEL") {
+    //                         attributeObject.push({ "textContent": lblTextContent });
+    //                     }
+    //                     formAttributesJSON[tagName] = attributeObject
+                        
+    //                 }
+    //                 delete formAttributesJSON.SPAN;
+
+    //                 formAttributesJSONString = JSON.stringify(formAttributesJSON);
+    //                 listOfTagAttributes[newId] = formAttributesJSONString
+    //             }
+    //         }
+            
+    //         $.ajax({
+    //             url: "saveFrom/",
+    //             type: "POST",
+    //             data: {
+    //                 listOfTagAttributes : JSON.stringify(listOfTagAttributes),
+    //                 csrfmiddlewaretoken : '{{ csrf_token }}',
+    //             },
+    //             success:function(data){
+    //                 console.log(data);
+    //                 console.log("Data is successfully saved...")
+    //             },
+    //             error:function(data){
+    //                 console.log("Something went wrong...")
+    //             }
+    //         });
+    //     });
+
+</script>
+</body>
+</html>

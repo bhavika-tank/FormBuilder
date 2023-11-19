@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Drag and Drop Example</title>
+</head>
+<body>
+  <div class="box2" id="dropTarget" style="border: 1px solid;">
+    <!-- Content of the drop target --><hr>
+    
+  </div>
+
+  <div class="draggable-item" draggable="true" style="border: 1px solid;">
+    <!-- Content of the draggable item --><hr>
+    <div class="d-flex mb-3 boxbdr p-2" name="passwordinput" id="textBox" draggable='true'>
+        <label class="form-label pt-1 fw-bold" style="padding-right: 10px;">Password</label>
+        <input type="password" class='form-control' placeholder="Password Input" disabled/>
+    </div>
+  </div>
+
+  <script>
+    let draggingTarget;
+
+    document.addEventListener("dragstart", function (event) {
+      draggingTarget = event.target;
+    });
+
+    document.querySelector(".box2").addEventListener("dragover", function (event) {
+      event.preventDefault();
+      // You can add additional code here for handling the dragover event
+    });
+
+    document.querySelector(".box2").addEventListener("drop", function (event) {
+      event.preventDefault();
+
+      // Your code to handle the "drop" event goes here
+      // You can access information about the event using the 'event' parameter
+
+      const dropTarget = event.currentTarget;
+      dropTarget.appendChild(draggingTarget);
+
+      // Clear the draggingTarget to reset it for the next drag operation
+      draggingTarget = null;
+    });
+  </script>
+</body>
+</html>

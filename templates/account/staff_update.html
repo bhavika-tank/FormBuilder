@@ -1,0 +1,59 @@
+{% extends "base.html"%}
+
+{% block title %}
+Update Staff
+{% endblock title %}
+
+{% block content %}
+
+<!-- Alert Start -->
+{% block error_messages %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-sticky alert-{{ message.tags }}" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">×</button>
+                <strong>{{ message }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock error_messages %}
+<!-- Alert End -->
+
+<!-- PAGE-HEADER -->
+<div class="page-header">
+    <h1 class="page-title" onclick="history.back()"><i class="fa fa-reply" style="cursor: pointer;"></i> Update Staff</h1>
+    <div>
+    </div>
+</div>
+<!-- PAGE-HEADER END -->
+
+
+<!-- Row -->
+<div class="row d-flex justify-content-center">
+    <div class="col-md-12 col-xl-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Update Staff Here..</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" class="form-label">Username</label>
+                            {{Update_staff_form.username}}
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" class="form-label">Email</label>
+                            {{ Update_staff_form.email }}
+                        </div>
+                    </div>
+                    <button class="btn btn-primary mt-4 mb-0" type="submit">UPDATE</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Row -->
+
+{% endblock content %}

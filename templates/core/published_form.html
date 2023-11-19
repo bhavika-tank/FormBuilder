@@ -1,0 +1,73 @@
+{% extends "base.html"%}
+
+{% block title %}
+Published Form List
+{% endblock title %}
+
+{% block content %}
+
+<!-- PAGE-HEADER -->
+<div class="page-header">
+    <h1 class="page-title">Published Form</h1>
+    {% comment %} <div>
+        <a href="{% url 'account:user-add' %}" class="btn btn-primary label-btn">
+            <i class="fe fe-plus label-btn-icon me-2"></i>
+            ADD USER
+        </a>
+    </div> {% endcomment %}
+</div>
+<!-- PAGE-HEADER END -->
+
+<!-- Row -->
+<div class="row row-sm">
+    <div class="col-lg-12">
+        <div class="card">
+            <!-- <div class="card-header" style="display: flex; justify-content: space-between;">
+                <h3 class="card-title">List Of Staffs</h3>
+                <a href="/" class="btn btn-primary label-btn">
+                    <i class="fe fe-plus label-btn-icon me-2"></i>
+                    ADD STAFF
+                </a>
+            </div> -->
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="example2" class="table table-bordered text-nowrap border-bottom">
+                        <thead>
+                            <tr>
+                                <th class="border-bottom-0">User Name</th>
+                                {% comment %} <th class="border-bottom-0">UUID</th> {% endcomment %}
+                                <th class="border-bottom-0">Form Name</th>
+                                <th class="border-bottom-0">Form Link</th>
+                                <th class="border-bottom-0">Form QRCode</th>
+                                <th class="border-bottom-0">Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td>{{user.user}}</td>
+                                {% comment %} <td>{{user.form_uid}}</td> {% endcomment %}
+                                <td>{{user.form_name}}</td>
+                                <td><a href="{{user.form_link}}">{{user.form_link}}</a></td>
+                                <td class="text-center"><img src="data:image/png;base64,{{user.form_qrcode}}" style="height: 100px; width: 100px;"/></td>
+                                {% comment %} <td>{{user.attributes}}</td> {% endcomment %}
+                                <td class="text-center">
+                                    {% comment %} <a class="btn btn-sm btn-info" style="width: 100px;" href=""> 
+                                        <span class="fe fe-edit"> Edit</span> </a> {% endcomment %}
+                                    <a class="btn  btn-sm btn-danger" style="width: 100px;" href="{% url "core:publishedform_delete" user.id %}" onclick="return confirm('Are you sure you want to delete form?');">
+                                        <span class="fe fe-trash-2">Delete</span>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Row -->
+
+{% endblock content %}

@@ -1,0 +1,328 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/core.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    
+</head>
+<body>
+    <div class="container" id="container">
+    
+        <div class="row">
+    
+            <div class="col border-2 border-end border-dark justify-content-center">
+                <h1>Welcome </h1>
+                <div id="modules" ondragover="event.preventDefault()">
+                    <div class="d-flex mb-3" id="textBox">
+                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Text Input" draggable="true" readonly>
+                        <div class="px-2" onclick="add_textInput()"><span class="input-group-text p-2 btn btn-primary" style="cursor: pointer;"><i class="fa fa-plus" ></i></span></div>
+                    </div>
+                    <div class="d-flex mb-3">
+                        <input type="password" class="form-control" placeholder="Password Input" readonly>
+                        <div class="px-2" onclick="add_passwordInput()"><span class="input-group-text p-2 btn btn-primary" style="cursor: pointer;"><i class="fa fa-plus"></i></span></div>
+                    </div>
+                    <div class="d-flex mb-3">
+                        <input type="file" class="form-control" disabled>
+                        <div class="px-2" onclick="add_fileInput()"><span class="input-group-text p-2 btn btn-primary" style="cursor: pointer;"><i class="fa fa-plus"></i></span></div>
+                    </div>
+                    <div class="d-flex mb-3">
+                        <select class="form-select" aria-label="Default select example" disabled>
+                            <option selected>Select</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                            </select>
+                        <div class="px-2" onclick="add_selectInput()"><span class="input-group-text p-2 btn btn-primary" style="cursor: pointer;"><i class="fa fa-plus"></i></span></div>
+                    </div>
+                    <div class="d-flex mb-3">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                        <label class="form-check-label px-1" for="flexCheckDefault">Default checkbox</label>
+                        <div class="px-2" onclick="add_checkboxInput()"><span class="input-group-text p-2 btn btn-primary" style="cursor: pointer;"><i class="fa fa-plus"></i></span></div>
+                    </div>
+                    <div class="d-flex mb-3">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexCheckDefault" disabled>
+                        <label class="form-check-label px-1" for="flexCheckDefault">Default radio</label>
+                        <div class="px-2" onclick="add_radioButton()"><span class="input-group-text p-2 btn btn-primary" style="cursor: pointer;"><i class="fa fa-plus"></i></span></div>
+                    </div>
+                    <div class="d-flex mb-3 form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" disabled>
+                        <label class="form-check-label px-2" for="flexSwitchCheckDefault">switch</label>
+                        <div class="px-2" onclick="add_switchButton()"><span class="input-group-text p-2 btn btn-primary" style="cursor: pointer;"><i class="fa fa-plus"></i></span></div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-10">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+                            type="button" role="tab" aria-controls="nav-home" aria-selected="true">Home</button>
+                        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                            type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</button>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="card" id="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <div class="card-body" id="formElement">
+                                <form class="form-horizontal rmform" id="elementcontent">
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-success">Clear</button>
+                    
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <div class="card" id="codecontainer">
+    
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" type="button" id="reset">Reset</button>
+                
+    
+            </div>
+    
+        </div>
+    
+    </div>
+
+    
+</body>
+
+<script>
+    $(document).ready(function(){
+        $("button").click(function(){
+        $("form").empty(".rmform");
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    // console.log(document.getElementsByClassName('container')[0].childNodes[1].childNodes[3].childNodes[3]);
+    const content = document.getElementsByClassName('container')[0].innerHTML;
+    // document.getElementById('codecontainer').textContent = content;
+
+    
+    console.log(document.getElementById('elementcontent'));
+
+    $(document).ready(function(){
+        $("#reset").click(function(){
+            $("#elementcontent").empty();
+        });
+
+    });
+
+    let get = (tag) => document.querySelector(tag);
+    let draggingTarget = null;
+
+    document.addEventListener("dragstart", function (event) {
+        // console.log(event.target);
+        draggingTarget = event.target;
+    });
+
+    get(".elementcontent").addEventListener("dragover", function (event) {
+        // console.log(event.target);
+        event.preventDefault();
+    });
+
+    get(".elementcontent").addEventListener("drop", function (event) {
+        console.log(draggingTarget);
+        let newTarget = draggingTarget.cloneNode(true);
+        console.log(newTarget);
+        this.appendChild(newTarget);
+    });
+
+    // $(document).ready(function() {
+    //     const draggable = document.getElementById(`textBox`);
+    //     const row = document.querySelector('#elementcontent');
+
+    //     draggable.addEventListener('dragover', (e) => {
+    //         e.dataTransfer.setData('text/plain', "dragging");
+    //     });
+
+    //     row.addEventListener('dragover', (e) => {
+    //         e.preventDefault();
+    //     });
+
+    //     row.addEventListener("drop", (e) => {
+    //         e.preventDefault();
+    //         row.append(draggable)
+    //     });
+    // });
+
+    function editTextInput(){
+        
+    }
+
+    function removeTextInput(id){
+        const rmelment = document.getElementById(`TextInputelement-${id}`)
+        rmelment.remove();
+    }
+
+    function removePassInput(id){
+        const rmelment = document.getElementById(`PassInput-${id}`)
+        rmelment.remove();
+    }
+
+    function removeFileInput(id){
+        const rmelment = document.getElementById(`FileInput-${id}`)
+        rmelment.remove();
+    }
+    function removeSelectInput(id){
+        const rmelment = document.getElementById(`SelectInput-${id}`)
+        rmelment.remove();
+    }
+
+    function removeCheckbox(id){
+        const rmelment = document.getElementById(`checkbox-${id}`)
+        rmelment.remove();
+    }
+
+    function removeRadioBtn(id){
+        const rmelment = document.getElementById(`radioBtn-${id}`)
+        rmelment.remove();
+    }
+
+    function removeTextArea(id){
+        const rmelment = document.getElementById(`textArea-${id}`)
+        rmelment.remove();
+    }
+
+    function removeSwitchBtn(id){
+        const rmelment = document.getElementById(`switchBtn-${id}`)
+        rmelment.remove();
+    }
+
+    function removeButton(id){
+        const rmelment = document.getElementById(`btnId-${id}`)
+        rmelment.remove();
+    }
+
+    var txtId = 0;
+    function add_textInput(){
+        txtId++;
+        const element = `<div class="d-flex mb-3" id="TextInputelement-${txtId}">
+                            <label for="exampleInputEmail1" class="form-label" style="padding-right: 10px;">Text&nbsp;Input</label>
+                            <input type="text" class="form-control" placeholder="Text Input">
+                            <div class="px-2" onclick="removeTextInput(${txtId})"><span class="input-group-text p-2" style="cursor: pointer; color:red"><i class="fa fa-trash"></i></span></div>
+                            <div class="px-2"><span class="input-group-text p-2" style="cursor: pointer;"><i class="fa fa-pencil"></i></span></div>
+                        </div>`
+        document.getElementById('elementcontent').innerHTML+=element;
+    }
+
+    var passId = 0;
+    function add_passwordInput(){
+        passId++;
+        const element = `<div class="d-flex mb-3" id="PassInput-${passId}">
+                            <label for="exampleInputEmail1" class="form-label" style="padding-right: 10px;">Password&nbsp;Input</label>
+                            <input type="password" class="form-control" placeholder="Password Input">
+                            <div class="px-2" onclick="removePassInput(${passId})"><span class="input-group-text p-2" style="cursor: pointer; color:red"><i class="fa fa-trash"></i></span></div>
+                            <div class="px-2"><span class="input-group-text p-2" style="cursor: pointer;"><i class="fa fa-pencil"></i></span></div>
+                        </div>`
+        document.getElementById('elementcontent').innerHTML+=element;
+    }
+
+    var fileIn = 0;
+    function add_fileInput(){
+        fileIn++;
+        const element = `<div class="d-flex mb-3" id="FileInput-${fileIn}">
+                            <label for="formFile" class="form-label" style="padding-right: 10px;">File&nbsp;Input</label>
+                            <input type="file" class="form-control">
+                            <div class="px-2" onclick="removeFileInput(${fileIn})"><span class="input-group-text p-2" style="cursor: pointer; color:red"><i class="fa fa-trash"></i></span></div>
+                            <div class="px-2"><span class="input-group-text p-2" style="cursor: pointer;"><i class="fa fa-pencil"></i></span></div>
+                        </div>`
+        document.getElementById('elementcontent').innerHTML+=element;
+    }
+
+    var selIn = 0;
+    function add_selectInput(){
+        selIn++;
+        const element = `<div class="d-flex mb-3" id="SelectInput-${selIn}">
+                            <label for="formFile" class="form-label" style="padding-right: 10px;">Select&nbsp;Input</label>
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Open this select menu</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select>
+                            <div class="px-2" onclick="removeSelectInput(${selIn})"><span class="input-group-text p-2" style="cursor: pointer; color:red"><i class="fa fa-trash"></i></span></div>
+                            <div class="px-2"><span class="input-group-text p-2" style="cursor: pointer;"><i class="fa fa-pencil"></i></span></div>
+                        </div>`
+        document.getElementById('elementcontent').innerHTML+=element;
+    }
+
+    var checkId = 0;
+    function add_checkboxInput(){
+        checkId++;
+        const element = `<div class="d-flex mb-3 form-check" id="checkbox-${checkId}">
+                            <input class="form-check-input " type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label px-2" for="flexCheckDefault">Checkbox</label>
+                            <div class="px-2" onclick="removeCheckbox(${checkId})"><span class="input-group-text p-2" style="cursor: pointer; color:red"><i class="fa fa-trash"></i></span></div>
+                            <div class="px-2"><span class="input-group-text p-2" style="cursor: pointer;"><i class="fa fa-pencil"></i></span></div>
+                        </div>`
+        document.getElementById('elementcontent').innerHTML+=element;
+    }
+
+    var radioId = 0;
+    function add_radioButton(){
+        radioId++;
+        const element = `<div class="d-flex mb-3 form-check" id="radioBtn-${radioId}">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexCheckDefault">
+                            <label class="form-check-label px-3" for="flexCheckDefault">Radio</label>
+                            <div class="px-2" onclick="removeRadioBtn(${radioId})"><span class="input-group-text" style="cursor: pointer; color:red"><i class="fa fa-trash"></i></span></div>
+                            <div class="px-2"><span class="input-group-text p-2" style="cursor: pointer;"><i class="fa fa-pencil"></i></span></div>
+                        </div>`
+        document.getElementById('elementcontent').innerHTML+=element;
+    }
+
+    var switchId = 0;
+    function add_switchButton(){
+        switchId++;
+        const element = `<div class="d-flex mb-3 form-check form-switch" id="switchBtn-${switchId}">
+                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Switch</label>
+                            <div class="px-2" onclick="removeSwitchBtn(${switchId})"><span class="input-group-text p-2" style="cursor: pointer; color:red"><i class="fa fa-trash"></i></span></div>
+                            <div class="px-2"><span class="input-group-text p-2" style="cursor: pointer;"><i class="fa fa-pencil"></i></span></div>
+                        </div>`
+        document.getElementById('elementcontent').innerHTML+=element;
+    }
+
+    var textAreaId = 0;
+    function add_textareaInput(){
+        textAreaId++;
+        const element = `<div class="d-flex mb-3" id="textArea-${textAreaId}">
+                            <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <div class="px-2" onclick="removeTextArea(${textAreaId})"><span class="input-group-text p-2" style="cursor: pointer; color:red"><i class="fa fa-trash"></i></span></div>
+                            <div class="px-2"><span class="input-group-text p-2" style="cursor: pointer;"><i class="fa fa-pencil"></i></span></div>
+                        </div>`
+        document.getElementById('elementcontent').innerHTML+=element;
+    }
+
+    var btnId = 0;
+    function add_button(){
+        btnId++;
+        const element = `<div id="btnId-${btnId}">
+                            <button type="button" class="btn btn-primary">Primary</button>
+                            <div class="px-2" onclick="removeButton(${btnId})"><span class="input-group-text p-2" style="cursor: pointer; color:red"><i class="fa fa-trash"></i></span></div>
+                            <div class="px-2"><span class="input-group-text p-2" style="cursor: pointer;"><i class="fa fa-pencil"></i></span></div>
+                        </div>`
+        document.getElementById('elementcontent').innerHTML+=element;
+    }
+
+</script>
+
+</html>

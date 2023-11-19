@@ -1,0 +1,296 @@
+{% extends "base.html"%}
+{% load static %}
+
+{% block title %}
+Home
+{% endblock title %}
+    
+{% block extra-css %}
+<style>
+    .tabpen_min_hight{
+        min-height: 300px;
+    }
+    .tab_li{
+        color: #FFFFFF !important;
+        position: relative !important;
+    }
+    .tab_close{
+        position: absolute;
+        right: 4%;
+        top: -7%;
+    }
+
+
+
+
+    html * {
+        box-sizing: border-box;
+    }
+    p {
+        margin: 0;
+    }
+    .upload__box {
+        padding: 40px;
+    }
+    .upload__inputfile {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+    }
+    .upload__btn {
+        display: inline-block;
+        font-weight: 600;
+        color: #fff;
+        text-align: center;
+        min-width: 116px;
+        padding: 5px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: 2px solid;
+        background-color: #4045ba;
+        border-color: #4045ba;
+        border-radius: 10px;
+        line-height: 26px;
+        font-size: 14px;
+    }
+    .upload__btn:hover {
+        background-color: unset;
+        color: #4045ba;
+        transition: all 0.3s ease;
+    }
+    .upload__btn-box {
+        margin-bottom: 10px;
+    }
+    .upload__img-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -10px;
+    }
+    .upload__img-box {
+        width: 200px;
+        padding: 0 10px;
+        margin-bottom: 12px;
+    }
+    .upload__img-close {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background-color: rgba(0, 0, 0, 0.5);
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        text-align: center;
+        line-height: 24px;
+        z-index: 1;
+        cursor: pointer;
+    }
+    .upload__img-close:after {
+        content: '\2716';
+        font-size: 14px;
+        color: white;
+    }
+    .img-bg {
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        position: relative;
+        padding-bottom: 100%;
+    }
+    
+
+    
+</style>
+{% endblock extra-css %}
+
+{% block content %}
+
+<!-- Alert Start -->
+{% block error_messages %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-sticky alert-{{ message.tags }}" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">×</button>
+                <strong>{{ message }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock error_messages %}
+<!-- Alert End -->
+
+<div class="page-header m">
+    <h1 class="page-title">Build Form</h1>
+    <div>
+    </div>
+</div>
+
+
+<div class="upload__box p-0">
+    <div class="upload__btn-box">
+      <label class="upload__btn">
+        <p style="margin-bottom: 0;">Upload images For Referance</p>
+        <input type="file" multiple="" id="photo" data-max_length="20" class="upload__inputfile">
+      </label>
+    </div>
+    <div class="upload__img-wrap"></div>
+  </div>
+
+
+
+
+
+
+<div class="row">
+    <!-- COL END -->
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-3">
+        <div class="card overflow-hidden">
+            
+                <div class="card-body">
+                    <div class="d-flex mb-3 boxbdr p-2" name="textinput" id="textBox" draggable='true'>
+                        <label class="form-label pt-1 fw-bold" style="padding-right: 10px;">Text&nbsp;Input</label>
+                        <input type="text" name="inputtext" id="text" class='form-control hover-2' placeholder="Text Input" disabled/>
+                    </div>
+
+
+                    <!-- <div class="d-flex mb-3 boxbdr p-2" name="passwordinput" id="textBox" draggable='true'>
+                        <label class="form-label pt-1 fw-bold" style="padding-right: 10px;">Password</label>
+                        <input type="password" class='form-control' placeholder="Password Input" disabled/>
+                    </div> -->
+
+                    <div class="d-flex mb-3 boxbdr p-2" id="textBox" draggable='true'>
+                        <label class="form-label pt-1 fw-bold" style="padding-right: 10px;">Textarea</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" disabled placeholder="Textarea..."></textarea>
+                    </div>
+
+                    <div class="d-flex mb-3 boxbdr p-2" id="textBox" draggable='true'>
+                        <label class="form-label pt-1 fw-bold" style="padding-right: 10px;">Email</label>
+                        <input type="email" class='form-control' id="email" placeholder="Eamil@gmail.com" disabled/>
+                    </div>
+
+                    <!-- <div class="d-flex mb-3 boxbdr p-2" id="textBox" draggable='true'>
+                        <label class="form-label pt-1 fw-bold" style="padding-right: 10px;">File&nbsp;Input</label>
+                        <input type="file" class='form-control' disabled/>
+                    </div> -->
+
+                    <div class="d-flex mb-3 boxbdr p-2" id="textBox" draggable='true'>
+                        <label class="form-label pt-1 fw-bold" style="padding-right: 10px;">select</label>
+                        <select class="form-select" aria-label="Default select example" disabled style="background-color: transparent !important;">
+                        </select>
+                    </div>
+
+                    <div class="d-flex mb-3 boxbdr p-2" id="textBox" draggable='true'>
+                        <input class="form-check-input mx-1" type="checkbox" value="" id="flexCheckDefault" disabled>
+                        <label class="form-check-label mx-5">checkbox</label>
+                    </div>
+
+                    <div class="d-flex mb-3 boxbdr p-2" id="textBox" draggable='true'>
+                        <input class="form-check-input mx-1" type="radio" value="" id="flexCheckDefault" disabled>
+                        <label class="form-check-label mx-5">RadioButton</label>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <!-- COL END -->
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-9">
+        <form method="post" onsubmit="return false">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label fw-bold mt-0" >Form Name</label>
+                <input type="text" name="formname" id="formname" class="form-control" id="exampleFormControlInput1" placeholder="Enter form name...">
+            </div>
+            <div class="card card-headpills">
+                <div class="card-header border-bottom">
+                    <div class="card-title">
+                        <ul class="nav nav-pills card-header-pills" id="nav-tab" onmousedown="return false">
+                            <li class="nav-item px-2 mb-2">
+                                <a class="btn btn-outline-primary active" style="width: 93px;" data-bs-toggle="tab" href="#activepills">Home</a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                    <div class="card-options">
+                        <button class="btn btn-outline-primary mx-2" type="button" id="add_tab_content">+</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane active dropArea box2 nav-home border tabpen_min_hight" id="activepills">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-end px-2">
+                    <button type="submit" class="btn btn-danger" id="reset">RESET</button>
+                    <button type="submit" class="btn btn-success" id="save">SAVE</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasScrollingLabel"></h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" id="clear"><i class="fe fe-x fs-18"></i></button>
+        </div>
+        <div class="offcanvas-body" id="changer" onchange="ChangeElement(element)">
+
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block extrajs %}
+
+
+<script>
+
+    var tab_list = {};
+    $("#save").on("click", function () {
+        var tab_content = document.getElementById('nav-tabContent').children;
+        var tabBtn = document.getElementById('nav-tab').children;
+
+        for (var tab_i = 0; tab_i < tabBtn.length; tab_i++) {
+            console.log(tabBtn[tab_i].textContent);
+        }
+
+        newId = 0;
+        for(var i = 0 ; i<tab_content.length; i++){
+            tab_name = tabBtn[i].textContent;
+            
+            
+            var formChildAttributes = tab_content[i].children;
+            for(let element=0; element < formChildAttributes.length; element++) {
+                var selected_child = formChildAttributes[element].children
+                for(var innerElement=0; innerElement < selected_child.length; innerElement++){
+                    selected_child[innerElement].lastChild.remove();
+                }
+            }
+            var formJSONString = JSON.stringify(tab_content[i].outerHTML);
+            tab_list[tab_name]= formJSONString;
+        }
+
+        console.log(tab_list);
+
+        $.ajax({
+            url: "/core/saveForm/",
+            type: "POST",
+            data: {
+                formname: document.getElementById('formname').value,
+                tab_list: JSON.stringify(tab_list),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+            },
+            success: function (data) {
+                console.log(data);
+                console.log("Data is successfully saved...");
+            },
+            error: function (data) {
+                console.log("Something went wrong...");
+            }
+        });
+    });
+
+
+</script>
+{% endblock extrajs %}

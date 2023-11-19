@@ -1,0 +1,73 @@
+{% extends "base.html"%}
+
+{% block title %}
+Company Add
+{% endblock title %}
+
+{% block content %}
+
+<!-- Alert Start -->
+{% block error_messages %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-sticky alert-{{ message.tags }}" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">×</button>
+                <strong>{{ message }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock error_messages %}
+<!-- Alert End -->
+
+<!-- PAGE-HEADER -->
+<div class="page-header">
+    <h1 class="page-title" onclick="history.back()"><i class="fa fa-reply" style="cursor: pointer;"></i> Add Company</h1>
+    <div>
+    </div>
+</div>
+<!-- PAGE-HEADER END -->
+
+
+<!-- Row -->
+<div class="row d-flex justify-content-center">
+    <div class="col-md-12 col-xl-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Add Company Here..</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="">
+                        {{ form.type }}
+                        {{ form.created_by }}
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" class="form-label">Company Name</label>
+                            {{form.companyname}}
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" class="form-label">Username</label>
+                            {{form.username}}
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" class="form-label">Email</label>
+                            {{ form.email }}
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                            {{form.password1}}
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
+                            {{form.password2}}
+                        </div>
+                    </div>
+                    <button class="btn btn-primary mt-4 mb-0" type="submit">SAVE</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Row -->
+
+{% endblock content %}

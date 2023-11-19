@@ -1,0 +1,88 @@
+{% extends "base.html"%}
+
+{% block title %}
+Comanies list
+{% endblock title %}
+
+{% block content %}
+
+<!-- Alert Start -->
+{% block error_messages %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-sticky alert-{{ message.tags }}" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">×</button>
+                <strong>{{ message }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock error_messages %}
+<!-- Alert End -->
+
+<!-- PAGE-HEADER -->
+<div class="page-header">
+    <h1 class="page-title">List Of Companies</h1>
+    <div>
+        <a href="{% url "account:company-add" %}" class="btn btn-primary label-btn">
+            <i class="fe fe-plus label-btn-icon me-2"></i>
+            ADD COMPANY
+        </a>
+    </div>
+</div>
+<!-- PAGE-HEADER END -->
+
+<!-- Row -->
+<div class="row row-sm mt-5">
+    <div class="col-lg-12">
+        <div class="card">
+            <!-- <div class="card-header">
+                <h3 class="card-title">Responsive DataTable</h3>
+            </div> -->
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="example2" class="table table-bordered text-nowrap border-bottom">
+                        <thead>
+                            <tr>
+                                <th class="border-bottom-0">Company Name</th>
+                                <th class="border-bottom-0">E-mail</th>
+                                <th class="border-bottom-0">UserName</th>
+                                <th class="border-bottom-0">Is Status</th>
+                                <th class="border-bottom-0">Permission</th>
+                                <th class="border-bottom-0">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td>{{user.companyname}}</td>
+                                <td>{{user.email}}</td>
+                                <td>{{user.username}}</td>
+                                <td>{{user.is_status}}</td>
+                                <td class="text-center">
+                                    {% if user.is_status == False %}
+                                    <a class="btn btn-success btn-sm shadow-sm btn-wave" style="width: 100px;" href="/update-status-approve/{{user.id}}"> 
+                                        <span class="fe fe-check"> Active</span> </a>
+                                    {% else %}
+                                    <a class="btn btn-danger btn-sm shadow-sm btn-wave" style="width: 100px;" href="/update-status-reject/{{user.id}}">
+                                        <span class="fe fe-x"> Deactive</span></a>
+                                    {% endif %}
+                                    
+                                </td>
+                                <td class="text-center">
+                                    <a class="btn btn-sm btn-info" style="width: 100px;" href="{% url 'account:company-update' user.id %}">
+                                        <span class="fe fe-edit"> EDIT</span> </a>
+                                    <a class="btn btn-sm btn-danger" style="width: 100px;" href="{% url 'account:company-delete' user.id %}" onclick="return confirm('Are you sure you want to delete user?');">
+                                        <span class="fe fe-trash"> DELETE</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Row -->
+
+{% endblock content %}
